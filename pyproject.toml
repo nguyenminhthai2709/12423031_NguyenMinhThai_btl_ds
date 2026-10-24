@@ -1,0 +1,24 @@
+# Minimal packaging file so that `pip install -e .` makes the `fraud`
+# package (in src/) importable from scripts, tests and the Streamlit app.
+# Third-party dependencies are listed in requirements.txt (single source
+# of truth), so they are intentionally not duplicated here.
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "credit-card-fraud-detection"
+version = "0.1.0"
+description = "Credit Card Fraud Detection Using Machine Learning (Data Science coursework)"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+# Lets `pytest` import `fraud` without installing the package.
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra"

@@ -1,0 +1,5 @@
+# Normalise line endings so Windows / Linux / macOS checkouts behave the same.
+* text=auto
+*.png binary
+*.jpg binary
+*.joblib binary

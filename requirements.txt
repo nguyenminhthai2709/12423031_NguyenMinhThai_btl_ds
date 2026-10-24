@@ -1,0 +1,30 @@
+# Credit Card Fraud Detection – dependencies
+# Python >= 3.10 is required.
+# Install with:  pip install -r requirements.txt
+# Version ranges (not exact pins) are used on purpose; after the final
+# experiment run, freeze the exact versions you used for reproducibility:
+#     pip freeze > requirements-lock.txt
+
+# Core data stack
+numpy>=1.26,<3
+pandas>=2.0,<4
+scipy>=1.11,<2
+scikit-learn>=1.3,<2
+joblib>=1.3
+
+# Models
+xgboost>=2.0,<4
+
+# Visualisation
+matplotlib>=3.7,<4
+seaborn>=0.13,<1
+plotly>=5.18,<7
+
+# Demo application
+streamlit>=1.30,<2
+
+# Testing
+pytest>=7.4,<10
+
+# Optional: uncomment if you want to run notebooks in notebooks/
+# jupyterlab

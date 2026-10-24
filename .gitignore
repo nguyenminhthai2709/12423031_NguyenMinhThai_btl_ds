@@ -1,0 +1,71 @@
+# =====================================================================
+# .gitignore – Credit Card Fraud Detection (Data Science coursework)
+# Principle: ignore the dataset, secrets, caches and run-time artefacts;
+# keep source code, tests, README and the reports that must be submitted.
+# =====================================================================
+
+# --- 1. Raw / processed data (never commit the Kaggle dataset) -------
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+# Safety net: the dataset must not be committed even if placed elsewhere.
+creditcard*.csv
+creditcardfraud*.zip
+
+# --- 2. Secrets / credentials (Kaggle API token, env files) ----------
+kaggle.json
+.kaggle/
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+*.pem
+*.key
+credentials*.json
+
+# --- 3. Virtual environments -----------------------------------------
+.venv/
+venv/
+env/
+ENV/
+
+# --- 4. Python / tool caches and build output ------------------------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.coverage
+htmlcov/
+
+# --- 5. Trained models (can be large) --------------------------------
+# Ignore everything in models/ except the placeholder and the small
+# threshold metadata file. If the final selected model is small
+# (check size first, e.g. < 50 MB) add it deliberately with:
+#     git add -f models/best_model.joblib
+models/*
+!models/.gitkeep
+!models/model_metadata.json
+*.joblib
+*.pkl
+*.pickle
+
+# --- 6. Files generated while running experiments --------------------
+# outputs/ = scratch space (logs, intermediate predictions, ...).
+# Figures/tables that go into the final report live in reports/ and
+# ARE tracked.
+outputs/*
+!outputs/.gitkeep
+*.log
+
+# --- 7. Editor / OS noise --------------------------------------------
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
