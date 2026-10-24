@@ -4,9 +4,9 @@
 Data Science coursework project / Bài tập lớn môn Khoa học dữ liệu.
 Author / Sinh viên: Nguyen Minh Thai – 12423031 *(edit if needed / chỉnh nếu cần)*
 
-> **Status / Trạng thái:** Phase 1 (project scaffolding) only. No model has been trained yet and
-> this README contains **no experimental results**. Results will be added after the experiments are
-> actually run. / Mới hoàn thành khung dự án; **chưa** huấn luyện mô hình, **chưa** có số liệu thực nghiệm.
+> **Status / Trạng thái:** Phase 1 (scaffolding) done; Phase 2 (EDA) code written — it must be run on the
+> real dataset by the author. No model has been trained yet and this README contains **no experimental
+> results**. / Đã có khung dự án và code EDA; **chưa** huấn luyện mô hình, **chưa** có số liệu thực nghiệm.
 
 ---
 
@@ -64,17 +64,22 @@ Exact dependency ranges are in [`requirements.txt`](requirements.txt).
 │   ├── README.md           # how to obtain creditcard.csv
 │   ├── raw/                # creditcard.csv goes here (git-ignored)
 │   └── processed/          # derived data (git-ignored)
-├── src/fraud/
-│   ├── __init__.py
-│   └── config.py           # paths, seed, split ratios, model/threshold options
+├── src/
+│   ├── eda.py              # Phase 2: exploratory data analysis (run directly)
+│   └── fraud/
+│       ├── __init__.py
+│       └── config.py       # paths, seed, split ratios, model/threshold options
 ├── notebooks/              # exploratory notebooks (optional)
 ├── models/                 # trained model (git-ignored) + model_metadata.json
-├── outputs/                # scratch / run-time files (git-ignored)
+├── outputs/
+│   ├── figures/            # EDA charts (tracked, small PNGs)
+│   └── metrics/            # eda_summary.json (tracked)
 ├── reports/
 │   ├── figures/            # EDA charts, PR curves, confusion matrices (tracked)
 │   └── tables/             # model comparison tables (tracked)
 └── tests/
-    └── test_config.py
+    ├── test_config.py
+    └── test_eda.py
 ```
 
 Added in later phases / Sẽ thêm ở các giai đoạn sau: `src/fraud/{data,split,pipelines,threshold,metrics,plots,predict}.py`,
@@ -106,12 +111,26 @@ pytest                     # runs the tests in tests/
 
 Then download the dataset as described in [`data/README.md`](data/README.md).
 
-## 7. Roadmap / Lộ trình
+## 7. Run the EDA / Chạy EDA (Phase 2)
+
+Put `creditcard.csv` in `data/raw/` first (see [`data/README.md`](data/README.md)), then:
+
+```powershell
+python src/eda.py
+# or with another location:
+python src/eda.py --data-path D:\datasets\creditcard.csv
+```
+
+Outputs / Đầu ra: `outputs/figures/*.png` (6 charts) and `outputs/metrics/eda_summary.json`.
+The script only describes the data: it never deletes rows, imputes values or modifies the raw file.
+If the file is missing it prints download instructions and exits with code 1.
+
+## 8. Roadmap / Lộ trình
 
 | Phase | Content | Status |
 |---|---|---|
 | 1 | Project scaffolding (this commit) | done, awaiting review |
-| 2 | EDA | planned |
+| 2 | EDA (`src/eda.py`) | code written, to be run on real data |
 | 3 | Preprocessing and splitting | planned |
 | 4 | Model training | planned |
 | 5 | Evaluation and threshold selection | planned |
@@ -119,13 +138,13 @@ Then download the dataset as described in [`data/README.md`](data/README.md).
 | 7 | Testing | planned |
 | 8 | Reporting (Vietnamese Markdown report) | planned |
 
-## 8. Reproducibility / Tái lập kết quả
+## 9. Reproducibility / Tái lập kết quả
 
 A single seed (`RANDOM_SEED = 42`) and the split ratios (60/20/20) are defined in `src/fraud/config.py`.
 After the final run, exact package versions will be frozen (`pip freeze > requirements-lock.txt`) and the
 commands to regenerate every figure and table will be documented here.
 
-## 9. Security and data hygiene / An toàn dữ liệu
+## 10. Security and data hygiene / An toàn dữ liệu
 
 - Never commit `creditcard.csv`, `kaggle.json`, `.env` files or API tokens (all are git-ignored).
 - Large model files are git-ignored by default; see the comment in `.gitignore` for adding the final model deliberately.

@@ -56,11 +56,13 @@ models/*
 *.pickle
 
 # --- 6. Files generated while running experiments --------------------
-# outputs/ = scratch space (logs, intermediate predictions, ...).
-# Figures/tables that go into the final report live in reports/ and
-# ARE tracked.
+# outputs/ : ignore by default (logs, intermediate predictions, ...), but
+# KEEP the small EDA figures (outputs/figures/) and JSON summaries
+# (outputs/metrics/) because the report refers to them.
 outputs/*
 !outputs/.gitkeep
+!outputs/figures/
+!outputs/metrics/
 *.log
 
 # --- 7. Editor / OS noise --------------------------------------------

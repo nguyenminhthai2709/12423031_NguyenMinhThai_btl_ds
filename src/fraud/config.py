@@ -46,7 +46,10 @@ TABLES_DIR: Path = REPORTS_DIR / "tables"  # model comparison tables (csv)
 REPORT_PATH: Path = REPORTS_DIR / "bao_cao.md"  # Vietnamese report (written in the last phase)
 
 NOTEBOOKS_DIR: Path = PROJECT_ROOT / "notebooks"
-OUTPUTS_DIR: Path = PROJECT_ROOT / "outputs"  # scratch space, git-ignored
+OUTPUTS_DIR: Path = PROJECT_ROOT / "outputs"  # kết quả chạy script (EDA, ...)
+EDA_FIGURES_DIR: Path = OUTPUTS_DIR / "figures"  # biểu đồ EDA (tracked, ảnh nhỏ)
+METRICS_DIR: Path = OUTPUTS_DIR / "metrics"  # file JSON tóm tắt (tracked)
+EDA_SUMMARY_PATH: Path = METRICS_DIR / "eda_summary.json"
 
 # ---------------------------------------------------------------------------
 # 2. Dataset schema (what we EXPECT; the EDA phase must verify it on real data)
@@ -137,6 +140,8 @@ def ensure_directories() -> None:
         TABLES_DIR,
         NOTEBOOKS_DIR,
         OUTPUTS_DIR,
+        EDA_FIGURES_DIR,
+        METRICS_DIR,
     ):
         directory.mkdir(parents=True, exist_ok=True)
 
