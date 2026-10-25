@@ -50,6 +50,12 @@ OUTPUTS_DIR: Path = PROJECT_ROOT / "outputs"  # kết quả chạy script (EDA, 
 EDA_FIGURES_DIR: Path = OUTPUTS_DIR / "figures"  # biểu đồ EDA (tracked, ảnh nhỏ)
 METRICS_DIR: Path = OUTPUTS_DIR / "metrics"  # file JSON tóm tắt (tracked)
 EDA_SUMMARY_PATH: Path = METRICS_DIR / "eda_summary.json"
+PREPROCESSING_SUMMARY_PATH: Path = METRICS_DIR / "preprocessing_summary.json"
+MODEL_COMPARISON_CSV: Path = METRICS_DIR / "model_comparison.csv"
+TRAINING_SUMMARY_PATH: Path = METRICS_DIR / "training_summary.json"
+VAL_PREDICTIONS_PATH: Path = METRICS_DIR / "val_predictions.joblib"
+THRESHOLD_OPTIMIZATION_CSV: Path = METRICS_DIR / "threshold_optimization.csv"
+EVALUATION_SUMMARY_PATH: Path = METRICS_DIR / "evaluation_summary.json"
 
 # ---------------------------------------------------------------------------
 # 2. Dataset schema (what we EXPECT; the EDA phase must verify it on real data)
@@ -73,9 +79,9 @@ SCALED_COLUMNS: list[str] = [TIME_COL, AMOUNT_COL]
 RANDOM_SEED: int = 42
 
 # Train / validation / test proportions (must sum to 1.0).
-TRAIN_SIZE: float = 0.60
-VAL_SIZE: float = 0.20
-TEST_SIZE: float = 0.20
+TRAIN_SIZE: float = 0.70
+VAL_SIZE: float = 0.15
+TEST_SIZE: float = 0.15
 
 # Two-step splitting: first cut off TEST_SIZE, then split the remainder into
 # train and validation. The validation share *of the remainder* is derived:

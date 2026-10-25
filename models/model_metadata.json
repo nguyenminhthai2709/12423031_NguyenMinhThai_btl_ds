@@ -1,0 +1,43 @@
+{
+  "best_model_key": "random_forest_baseline",
+  "best_model_name": "Random Forest",
+  "strategy": "baseline",
+  "selection_metric": "PR-AUC & Max F1 trên Validation",
+  "chosen_threshold": 0.5701,
+  "validation_metrics": {
+    "pr_auc": 0.8619,
+    "roc_auc": 0.9879,
+    "default_0_5": {
+      "precision": 0.9516,
+      "recall": 0.7973,
+      "f1_score": 0.8676
+    },
+    "optimized_threshold": {
+      "threshold": 0.5701,
+      "precision": 0.9516,
+      "recall": 0.7973,
+      "f1_score": 0.8676,
+      "confusion_matrix": {
+        "tn": 42644,
+        "fp": 3,
+        "fn": 15,
+        "tp": 59
+      }
+    }
+  },
+  "test_metrics_evaluated_once": {
+    "threshold": 0.5701,
+    "pr_auc": 0.832,
+    "roc_auc": 0.9622,
+    "f1_score": 0.8358,
+    "precision": 0.9333,
+    "recall": 0.7568,
+    "confusion_matrix": {
+      "tn": 42644,
+      "fp": 4,
+      "fn": 18,
+      "tp": 56
+    }
+  },
+  "integrity_statement": "Xác nhận: Tập Test được bảo vệ nguyên vẹn 100% trong suốt Phase 1-4. Mô hình và ngưỡng quyết định được cố định hoàn toàn từ tập Validation trước khi áp dụng lên tập Test này đúng 1 lần duy nhất."
+}

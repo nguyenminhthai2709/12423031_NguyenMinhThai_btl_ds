@@ -4,9 +4,9 @@
 Data Science coursework project / Bài tập lớn môn Khoa học dữ liệu.
 Author / Sinh viên: Nguyen Minh Thai – 12423031 *(edit if needed / chỉnh nếu cần)*
 
-> **Status / Trạng thái:** Phase 1 (scaffolding) done; Phase 2 (EDA) code written — it must be run on the
-> real dataset by the author. No model has been trained yet and this README contains **no experimental
-> results**. / Đã có khung dự án và code EDA; **chưa** huấn luyện mô hình, **chưa** có số liệu thực nghiệm.
+> **Status / Trạng thái:** Phase 1 đến Phase 6 đã hoàn thành. Đã có khung dự án, EDA, Preprocessing (70/15/15),
+> huấn luyện 4 mô hình (8 biến thể), tối ưu ngưỡng (chọn Random Forest baseline @ 0.5701), ứng dụng Streamlit (`app/app.py`)
+> và bộ 34 unit tests kiểm thử toàn diện. / Completed Phases 1–6 (all 34 tests passing).
 
 ---
 
@@ -129,22 +129,62 @@ If the file is missing it prints download instructions and exits with code 1.
 
 | Phase | Content | Status |
 |---|---|---|
-| 1 | Project scaffolding (this commit) | done, awaiting review |
-| 2 | EDA (`src/eda.py`) | code written, to be run on real data |
-| 3 | Preprocessing and splitting | planned |
-| 4 | Model training | planned |
-| 5 | Evaluation and threshold selection | planned |
-| 6 | Streamlit app | planned |
-| 7 | Testing | planned |
-| 8 | Reporting (Vietnamese Markdown report) | planned |
+| 1 | Project scaffolding & configuration | done |
+| 2 | EDA (`src/eda.py`) | done (figures & metrics generated) |
+| 3 | Preprocessing & splitting 70/15/15 (`src/preprocessing.py`) | done |
+| 4 | Model training: 4 models, 8 variants (`src/train.py`) | done |
+| 5 | Evaluation & Threshold selection (`src/evaluate.py`) | done (Best: Random Forest @ 0.5701) |
+| 6 | Streamlit web demo (`app/app.py`) | done |
+| 7 | Comprehensive testing (`tests/` – 34 unit tests) | done (34 passed) |
+| 8 | Reporting (`reports/final_report.md`) | done |
 
-## 9. Reproducibility / Tái lập kết quả
+## 9. Execution Workflow / Hướng dẫn chạy từng giai đoạn (PowerShell)
 
-A single seed (`RANDOM_SEED = 42`) and the split ratios (60/20/20) are defined in `src/fraud/config.py`.
+Mở PowerShell tại thư mục gốc của dự án (`C:\Users\BOOK PRO\12423031_NguyenMinhThai_btl_ds`) và thực hiện theo thứ tự:
+
+```powershell
+# Bước 1: Khám phá và phân tích dữ liệu (Phase 2)
+python src/eda.py
+
+# Bước 2: Tiền xử lý dữ liệu và chia tập Stratified 70/15/15 (Phase 3)
+python src/preprocessing.py
+
+# Bước 3: Huấn luyện và so sánh 4 mô hình học máy (Phase 4)
+python src/train.py
+
+# Bước 4: Đánh giá mô hình, tối ưu ngưỡng và kiểm thử độc lập (Phase 5)
+python src/evaluate.py
+
+# Bước 5: Chạy ứng dụng Web Demo trực quan (Phase 6)
+streamlit run app/app.py
+
+# Bước 6: Chạy toàn bộ 34 bài kiểm thử tự động (Phase 7)
+pytest
+```
+
+## 10. Run the Streamlit Demo App / Chi tiết ứng dụng Web Demo (Phase 6)
+
+Khởi chạy giao diện trực quan bằng Streamlit:
+
+```powershell
+streamlit run app/app.py
+```
+
+Ứng dụng cung cấp 5 tab chức năng:
+1. **Tổng quan dữ liệu:** Kích thước, phân phối nhãn mất cân bằng và phân chia tập 70/15/15.
+2. **Biểu đồ EDA:** 6 biểu đồ phân tích trực quan từ Phase 2.
+3. **So sánh 4 mô hình:** Bảng so sánh 8 biến thể, đồ thị PR curves, ROC curves và Confusion Matrix.
+4. **Dự đoán một giao dịch:** Nhập tham số hoặc chọn kịch bản mẫu, phân loại theo ngưỡng 0.5701.
+5. **Dự đoán hàng loạt từ CSV:** Tải file CSV lên, quét hàng loạt và tải file kết quả về máy.
+
+## 11. Reproducibility / Tái lập kết quả
+
+A single seed (`RANDOM_SEED = 42`) and the split ratios (70/15/15) are defined in `src/fraud/config.py`.
 After the final run, exact package versions will be frozen (`pip freeze > requirements-lock.txt`) and the
 commands to regenerate every figure and table will be documented here.
 
-## 10. Security and data hygiene / An toàn dữ liệu
+## 12. Security and data hygiene / An toàn dữ liệu
 
 - Never commit `creditcard.csv`, `kaggle.json`, `.env` files or API tokens (all are git-ignored).
 - Large model files are git-ignored by default; see the comment in `.gitignore` for adding the final model deliberately.
+- Báo cáo tổng kết đầy đủ bằng tiếng Việt được lưu tại [`reports/final_report.md`](reports/final_report.md).

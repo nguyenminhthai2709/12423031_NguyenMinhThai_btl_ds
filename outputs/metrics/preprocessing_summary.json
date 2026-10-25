@@ -1,0 +1,203 @@
+{
+  "dataset_info": {
+    "file_name": "creditcard.csv",
+    "file_size_bytes": 150828752,
+    "n_rows": 284807,
+    "n_columns": 31,
+    "features_count": 30,
+    "feature_names": [
+      "Time",
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5",
+      "V6",
+      "V7",
+      "V8",
+      "V9",
+      "V10",
+      "V11",
+      "V12",
+      "V13",
+      "V14",
+      "V15",
+      "V16",
+      "V17",
+      "V18",
+      "V19",
+      "V20",
+      "V21",
+      "V22",
+      "V23",
+      "V24",
+      "V25",
+      "V26",
+      "V27",
+      "V28",
+      "Amount"
+    ],
+    "target_name": "Class"
+  },
+  "data_quality": {
+    "n_rows": 284807,
+    "n_columns": 31,
+    "total_missing_values": 0,
+    "columns_with_missing": {},
+    "has_missing_values": false,
+    "n_duplicate_rows": 1081,
+    "duplicate_class_distribution": {
+      "0": 1822,
+      "1": 32
+    },
+    "dtypes_summary": {
+      "float64": 30,
+      "int64": 1
+    },
+    "handling_decision": "Giữ nguyên dữ liệu gốc: không xóa các dòng trùng lặp và không áp dụng thêm PCA vì V1-V28 đã qua chuẩn hóa PCA; không có giá trị khuyết thiếu cần điền."
+  },
+  "split_configuration": {
+    "random_seed": 42,
+    "train_ratio": 0.7,
+    "val_ratio": 0.15,
+    "test_ratio": 0.15,
+    "strategy": "Stratified random split (train_test_split 2 bước)",
+    "roles_explanation": {
+      "train_70pct": "Dùng để huấn luyện mô hình học quy luật và fit các bộ chuẩn hóa (scaler).",
+      "validation_15pct": "Dùng để tinh chỉnh siêu tham số, so sánh giữa các thuật toán và tìm ngưỡng quyết định (threshold tuning) tối ưu F1/Recall.",
+      "test_15pct": "Dữ liệu kiểm thử độc lập đóng vai trò tương lai chưa từng thấy, chỉ đánh giá 1 lần duy nhất để báo cáo hiệu năng tổng quát."
+    },
+    "temporal_split_limitation_note": "Hạn chế của chia ngẫu nhiên khi có cột Time: Giao dịch thẻ mang tính chất chuỗi thời gian liên tục. Khi chia ngẫu nhiên (dù có stratify), dữ liệu tương lai có thể lọt vào tập train và dữ liệu quá khứ rơi vào val/test, gây ra hiện tượng Temporal Data Leakage (nhìn trước tương lai). Trong ứng dụng thực tế ngân hàng, mô hình chỉ có thể học từ quá khứ và dự đoán cho tương lai."
+  },
+  "class_distributions": {
+    "full_dataset": {
+      "name": "Toàn bộ dữ liệu (Full)",
+      "total_samples": 284807,
+      "counts": {
+        "0_legitimate": 284315,
+        "1_fraud": 492
+      },
+      "percentage": {
+        "0_legitimate": 99.8273,
+        "1_fraud": 0.1727
+      },
+      "imbalance_ratio_legit_per_fraud": 577.88
+    },
+    "train_set": {
+      "name": "Tập Huấn luyện (Train - 70%)",
+      "total_samples": 199364,
+      "counts": {
+        "0_legitimate": 199020,
+        "1_fraud": 344
+      },
+      "percentage": {
+        "0_legitimate": 99.8275,
+        "1_fraud": 0.1725
+      },
+      "imbalance_ratio_legit_per_fraud": 578.55
+    },
+    "validation_set": {
+      "name": "Tập Kiểm định (Validation - 15%)",
+      "total_samples": 42721,
+      "counts": {
+        "0_legitimate": 42647,
+        "1_fraud": 74
+      },
+      "percentage": {
+        "0_legitimate": 99.8268,
+        "1_fraud": 0.1732
+      },
+      "imbalance_ratio_legit_per_fraud": 576.31
+    },
+    "test_set": {
+      "name": "Tập Kiểm thử (Test - 15%)",
+      "total_samples": 42722,
+      "counts": {
+        "0_legitimate": 42648,
+        "1_fraud": 74
+      },
+      "percentage": {
+        "0_legitimate": 99.8268,
+        "1_fraud": 0.1732
+      },
+      "imbalance_ratio_legit_per_fraud": 576.32
+    }
+  },
+  "preprocessing_pipeline": {
+    "scaled_columns": [
+      "Time",
+      "Amount"
+    ],
+    "passthrough_columns": [
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5",
+      "V6",
+      "V7",
+      "V8",
+      "V9",
+      "V10",
+      "V11",
+      "V12",
+      "V13",
+      "V14",
+      "V15",
+      "V16",
+      "V17",
+      "V18",
+      "V19",
+      "V20",
+      "V21",
+      "V22",
+      "V23",
+      "V24",
+      "V25",
+      "V26",
+      "V27",
+      "V28"
+    ],
+    "scaler_type": "StandardScaler",
+    "model_specific_strategies": {
+      "logistic_regression": "Bắt buộc chuẩn hóa qua Pipeline với StandardScaler (do nhạy cảm với thang đo lớn của Time và Amount).",
+      "decision_tree": "Không bắt buộc chuẩn hóa (thuật toán cây bất biến với phép biến đổi đơn điệu).",
+      "random_forest": "Không bắt buộc chuẩn hóa (tương tự cây quyết định).",
+      "xgboost": "Không bắt buộc chuẩn hóa (cây tăng cường dựa trên phân chia ngưỡng đơn điệu)."
+    },
+    "leakage_prevention": "Chỉ gọi scaler.fit() trên X_train. X_val và X_test chỉ được transform().",
+    "fitted_scaler_parameters": {
+      "Time": {
+        "mean": 94910.08688128248,
+        "std": 47516.53060805159
+      },
+      "Amount": {
+        "mean": 88.23376276559459,
+        "std": 248.38113961223291
+      }
+    }
+  },
+  "imbalance_handling": {
+    "smote_applied": false,
+    "reason_for_no_smote": "Giữ nguyên phân phối tự nhiên thực tế của tập validation và test; chuẩn bị dùng trọng số lớp (class weights) để chống thiên vị lớp đa số mà không tạo mẫu tổng hợp giả.",
+    "weights": {
+      "computed_on": "y_train_only",
+      "train_samples": {
+        "n_negative": 199020,
+        "n_positive": 344
+      },
+      "xgboost": {
+        "parameter": "scale_pos_weight",
+        "value": 578.5465,
+        "formula": "n_negative / n_positive (tính trên tập Train)"
+      },
+      "sklearn": {
+        "parameter": "class_weight='balanced'",
+        "effective_weights": {
+          "0_legitimate": 0.5009,
+          "1_fraud": 289.7733
+        }
+      }
+    }
+  }
+}
